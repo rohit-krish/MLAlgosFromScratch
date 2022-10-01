@@ -13,6 +13,7 @@ class KNN:
     def predict(self, X):
         predicted_labels = [self.__predict(x) for x in X]
         return np.array(predicted_labels)
+    
 
     def __predict(self, x):
         # compute distances
