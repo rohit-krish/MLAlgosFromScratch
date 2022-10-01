@@ -23,3 +23,9 @@ def mse(y_true,y_predicted):
 
 mse_value = mse(y_test,predicted)
 print(mse_value)
+
+y_pred_line = regressor.predict(X)
+m1 = plt.scatter(X_train,y_train,color='g',s=10)
+m2 = plt.scatter(X_test,y_test,color='b',s=10)
+plt.plot(X,y_pred_line,color='black',linewidth=2,label='Prediction')
+plt.show()
