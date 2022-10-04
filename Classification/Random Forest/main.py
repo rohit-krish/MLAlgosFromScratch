@@ -31,7 +31,7 @@ class RandomForest:
 
     def predict(self, X):
         tree_preds = np.array([tree.predict(X) for tree in self.trees])
-        # shape of treee_preds => [[1111] [0000] [1111]]
+        # shape of treee_preds => [[1111] [0000] [1111]] if n_trees = 4
         # we actually want to look like [[101] [101] [101] [101]]
         tree_preds = np.swapaxes(tree_preds, 0, 1)
         y_pred = [
