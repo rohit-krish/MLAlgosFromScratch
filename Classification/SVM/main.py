@@ -21,6 +21,7 @@ class SVM:
                 condition = y_[idx] * (np.dot(x_i, self.w) - self.b) >= 1
                 if condition:
                     self.w -= self.lr * (2 * self.lambda_param * self.w)
+                    # self.b -= 0
                 else:
                     self.w -= self.lr * (2*self.lambda_param * self.w - np.dot(x_i,y_[idx]))
                     self.b -= self.lr * y_[idx]
