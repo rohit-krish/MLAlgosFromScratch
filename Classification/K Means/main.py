@@ -22,8 +22,7 @@ class KMeans:
         self.n_samples, self.n_features = X.shape
 
         # intialize centroids
-        random_sample_idxs = np.random.choice(
-            self.n_samples, self.K, replace=False)
+        random_sample_idxs = np.random.choice(self.n_samples, self.K, replace=False)
 
         self.centroids = [self.X[idx] for idx in random_sample_idxs]
 
@@ -72,6 +71,5 @@ class KMeans:
         return closest_idx
 
     def _is_converged(self, centroids_old, centroids_new):
-        distances = [eucledean_distance(
-            centroids_old[i], centroids_new[i]) for i in range(self.K)]
+        distances = [eucledean_distance(centroids_old[i], centroids_new[i]) for i in range(self.K)]
         return sum(distances) == 0

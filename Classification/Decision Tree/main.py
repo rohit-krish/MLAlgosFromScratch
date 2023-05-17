@@ -43,16 +43,12 @@ class DecisionTree:
         n_labels = len(np.unique(y))
 
         # stopping criteria
-        if (depth >= self.max_depth or
-            n_labels == 1 or
-                n_samples < self.min_samples_split):
-
+        if (depth >= self.max_depth or n_labels == 1 or n_samples < self.min_samples_split):
             # now we are on the leaf node
             leaf_value = self._most_common_label(y)
             return Node(value=leaf_value)
 
-        feat_idxs = np.random.choice(
-            n_features, self.n_feats, replace=False)  # max,size
+        feat_idxs = np.random.choice(n_features, self.n_feats, replace=False)  # max,size
 
         # greedy search
         best_feat_idx, best_thresh = self._best_criteria(X, y, feat_idxs)

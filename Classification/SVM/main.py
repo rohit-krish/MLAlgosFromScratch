@@ -23,8 +23,7 @@ class SVM:
                     self.w -= self.lr * (2 * self.lambda_param * self.w)
                     # self.b -= 0
                 else:
-                    self.w -= self.lr * \
-                        (2*self.lambda_param * self.w - np.dot(x_i, y_[idx]))
+                    self.w -= self.lr * (2*self.lambda_param * self.w - np.dot(x_i, y_[idx]))
                     self.b -= self.lr * y_[idx]
 
     def predict(self, X):
