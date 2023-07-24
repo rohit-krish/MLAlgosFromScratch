@@ -1,1 +1,1 @@
->**Note:** All credits goes to [PythonEngineer YouTube Channel](https://www.youtube.com/c/PythonEngineer)
+>**Note:** All credits goes to [Patrick Loeber](https://github.com/patrickloeber/MLfromscratch)
