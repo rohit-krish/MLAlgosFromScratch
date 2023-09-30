@@ -24,8 +24,7 @@ class LogisticRegression:
 
             # Gradient descent
             for _ in range(self.n_itrs):
-                linear_model = np.dot(
-                    X, self.weights[class_idx]) + self.bias[class_idx]
+                linear_model = np.dot(X, self.weights[class_idx]) + self.bias[class_idx]
                 y_predicted = self._sigmoid(linear_model)
 
                 dw = (1 / n_samples) * np.dot(X.T, (y_predicted - binary_y))

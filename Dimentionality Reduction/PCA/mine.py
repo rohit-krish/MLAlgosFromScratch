@@ -15,7 +15,7 @@ def pca(X, n_components):
     eig_vecs = eig_vecs.T
 
     idxs = np.argsort(eig_vals)[::-1]
-    eig_vals = eig_vals[idxs]
+    # eig_vals = eig_vals[idxs]
     eig_vecs = eig_vecs[idxs]
 
     components = eig_vecs[:n_components]

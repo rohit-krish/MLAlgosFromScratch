@@ -1,3 +1,4 @@
+# https://www.youtube.com/watch?v=-7mILjsok34 -> What is boosting [krish naik]
 import numpy as np
 
 
@@ -27,14 +28,15 @@ class AdaBoost:
 
     def fit(self, X, y):
         n_samples, n_features = X.shape
+        EPS = np.finfo(float).eps
 
         # init weights
-        w = np.full(n_samples, 1/n_samples)
-
+        w = np.full(n_samples, 1 / n_samples)
         self.clfs = []
+
         for _ in range(self.n_clf):
             clf = DecisionStump()
-            min_error = float('inf')
+            min_error = float("inf")
 
             for feature_i in range(n_features):
                 X_column = X[:, feature_i]
@@ -48,7 +50,7 @@ class AdaBoost:
                     missclassified = w[y != preds]
                     error = sum(missclassified)
 
-                    if error > .5:
+                    if error > 0.5:
                         error = 1 - error
                         p = -1
 
@@ -58,8 +60,7 @@ class AdaBoost:
                         clf.threshold = threshold
                         clf.feature_idx = feature_i
 
-            EPS = np.finfo(float).eps
-            clf.alpha = .5 * np.log((1-error) / (error+EPS))
+            clf.alpha = 0.5 * np.log((1 - min_error) / (min_error + EPS))
 
             preds = clf.predict(X)
 

@@ -19,12 +19,12 @@ y = data.target
 y[y == 0] = -1
 
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=.2, stratify=y, shuffle=True
+    X, y, test_size=0.2, stratify=y, shuffle=True
 )
 
-clf = AdaBoost(n_clf=5)
+clf = AdaBoost(n_clf=7)
 clf.fit(X_train, y_train)
 y_pred = clf.predict(X_test)
 
 res = accuracy(y_test, y_pred)
-print(f'Accuracy: {res[0]} , n_correct: {res[1]} , n_incorrect: {res[2]}')
+print(f"Accuracy: {res[0]} , n_correct: {res[1]} , n_incorrect: {res[2]}")

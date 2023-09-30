@@ -8,8 +8,9 @@
 - SVM
 - Decision Tree
 - Random Forest
-- K-Means
 - AdaBoost
+- K-Means
+- Gaussian Mixture
 - Principal Component Analysis (PCA)
 - Linear Discriminant Analysis (LDA)
 

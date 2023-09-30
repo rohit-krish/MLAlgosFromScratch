@@ -2,7 +2,6 @@ import numpy as np
 
 
 class NaiveBayes:
-
     def fit(self, X, y):
         n_samples, n_features = X.shape
         self._classes = np.unique(y)
@@ -37,6 +36,6 @@ class NaiveBayes:
     def _pdf(self, class_idx, x):
         mean = self._mean[class_idx]
         var = self._var[class_idx]
-        numerator = np.exp(-(x-mean)**2 / (2*var))
+        numerator = np.exp(-((x - mean) ** 2) / (2 * var))
         denominator = np.sqrt(2 * np.pi * var)
         return numerator / denominator

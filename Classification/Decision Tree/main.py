@@ -2,18 +2,23 @@ import numpy as np
 from collections import Counter
 
 
-''''in decision tree regressors variance is used insted of entropy'''
+"""
+in decision tree regressors;
+    variance is used insted of entropy and mean insead of finding the most common on the leaf node
+"""
 
 
 def entropy(y):
     hist = np.bincount(y)
-    ps = hist/len(y)
+    ps = hist / len(y)
     # return -np.sum([p * np.log2(p) for p in ps if p > 0])
-    return -np.sum([p * np.log2(p+np.finfo(float).eps) for p in ps])
+    return -np.sum([p * np.log2(p + np.finfo(float).eps) for p in ps])
 
 
 class Node:
-    def __init__(self, feature_idx=None, threshold=None, left=None, right=None, value=None) -> None:
+    def __init__(
+        self, feature_idx=None, threshold=None, left=None, right=None, value=None
+    ) -> None:
         self.feature_idx = feature_idx
         self.threshold = threshold
         self.left = left
@@ -25,17 +30,14 @@ class Node:
 
 
 class DecisionTree:
-    def __init__(self, min_samples_split=2, max_depth=100, n_feats=None) -> None:
+    def __init__(self, min_samples_split=2, max_depth=100) -> None:
         self.min_samples_split = min_samples_split
         self.max_depth = max_depth
-        self.n_feats = n_feats
         self.root = None
 
     def fit(self, X, y):
         # grow tree
-        self.n_feats = X.shape[1] if not self.n_feats else min(
-            self.n_feats, X.shape[1]
-        )
+        self.n_feats = X.shape[1]
         self.root = self._grow_tree(X, y)
 
     def _grow_tree(self, X, y, depth=0):
@@ -43,18 +45,24 @@ class DecisionTree:
         n_labels = len(np.unique(y))
 
         # stopping criteria
-        if (depth >= self.max_depth or n_labels == 1 or n_samples < self.min_samples_split):
+        if (
+            depth >= self.max_depth
+            or n_labels == 1
+            or n_samples < self.min_samples_split
+        ):
             # now we are on the leaf node
             leaf_value = self._most_common_label(y)
             return Node(value=leaf_value)
 
-        feat_idxs = np.random.choice(n_features, self.n_feats, replace=False)  # max,size
+        feat_idxs = np.random.choice(
+            n_features, self.n_feats, replace=False
+        )  # max,size
 
         # greedy search
         best_feat_idx, best_thresh = self._best_criteria(X, y, feat_idxs)
         left_idxs, right_idxs = self._split(X[:, best_feat_idx], best_thresh)
-        left = self._grow_tree(X[left_idxs, :], y[left_idxs], depth+1)
-        right = self._grow_tree(X[right_idxs, :], y[right_idxs], depth+1)
+        left = self._grow_tree(X[left_idxs, :], y[left_idxs], depth + 1)
+        right = self._grow_tree(X[right_idxs, :], y[right_idxs], depth + 1)
         return Node(best_feat_idx, best_thresh, left, right)
 
     def _best_criteria(self, X, y, feat_idxs):
@@ -87,7 +95,7 @@ class DecisionTree:
         # weighted avg of child entropy
         n, n_l, n_r = len(y), len(left_idxs), len(right_idxs)
         e_l, e_r = entropy(y[left_idxs]), entropy(y[right_idxs])
-        child_entropy = (n_l/n) * e_l + (n_r/n) * e_r
+        child_entropy = (n_l / n) * e_l + (n_r / n) * e_r
 
         # return information gain
         ig = parent_entropy - child_entropy
@@ -98,7 +106,7 @@ class DecisionTree:
         right_idxs = np.argwhere(X_column > split_thresh).flatten()
         return left_idxs, right_idxs
 
-    ''' in decision tree regressors mean of the all child in the node is calculated rather than taking their common '''
+    """ in decision tree regressors mean of the all child in the node is calculated rather than taking their common """
 
     def _most_common_label(self, y):
         counter = Counter(y)

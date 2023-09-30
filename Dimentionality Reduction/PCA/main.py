@@ -1,3 +1,6 @@
+"""
+PCA intrestes in finding the component axes that maximize the variance of the data.
+"""
 import numpy as np
 
 
@@ -10,7 +13,7 @@ class PCA:
     def fit(self, X):
         # mean
         self.mean = np.mean(X, axis=0)
-        X = X-self.mean
+        X = X - self.mean
 
         cov = np.cov(X.T)
 
@@ -25,9 +28,9 @@ class PCA:
         eigen_vectors = eigen_vectors[idxs]
 
         # store first n eigenvectors
-        self.components = eigen_vectors[:self.n_components]
+        self.components = eigen_vectors[: self.n_components]
         print(self.components.shape)
-        print(self.mean.shape, 'mean')
+        print(self.mean.shape, "mean")
 
     def transform(self, X):
         X = X - self.mean

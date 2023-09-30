@@ -1,10 +1,13 @@
+"""
+LDA intrested in the axes that maximize the seperation between multiple classes.
+"""
 import numpy as np
 
 
 class LDA:
-    '''
+    """
     LDA assumes that each class follow a Gaussian distribution.
-    '''
+    """
 
     def __init__(self, n_components) -> None:
         self.n_components = n_components
@@ -33,10 +36,10 @@ class LDA:
         eig_vecs = eig_vecs.T
 
         idxs = np.argsort(abs(eig_vals))[::-1]
-        eig_vals = eig_vals[idxs]
+        # eig_vals = eig_vals[idxs]
         eig_vecs = eig_vecs[idxs]
 
-        self.linear_discriminants = eig_vecs[:self.n_components]
+        self.linear_discriminants = eig_vecs[: self.n_components]
 
     def transform(self, X):
         return np.dot(X, self.linear_discriminants.T)
